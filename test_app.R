@@ -1,3 +1,6 @@
+### This code is usually similar to what is in app.R. This separate file is so that I can try to implement new pieces of code
+### without having to try and figure out to remove if the new code does not work and so I always have a working app.R.
+
 library(shiny)
 library(tidyverse)
 library(plotly)
