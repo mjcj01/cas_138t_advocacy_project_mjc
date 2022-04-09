@@ -1,9 +1,10 @@
 library(shiny)
 library(tidyverse)
 library(plotly)
+library(rsconnect)
 
 ui <- fluidPage(
-  titlePanel(h2("School District Expenditures per Student")),
+  titlePanel("School District Expenditures per Student"),
   sidebarLayout(
     sidebarPanel(
       
@@ -11,8 +12,8 @@ ui <- fluidPage(
                   label = NULL,
                   choices = c(afr_expenditures_all$School.District),
                   selected = NULL),
-      checkboxInput("state_avg", "Show State Average Line", FALSE)),
-    
+      checkboxInput("state_avg", "Show State Average Line", FALSE),
+    ),
     
     mainPanel(
       conditionalPanel("input.state_avg == true", plotlyOutput("districtspending_withstate", height = "600px")),
@@ -37,9 +38,9 @@ server <- function(input, output) {
       geom_line(aes(y = Total.Exp.per.ADM), color = "#0AB6FF", size = 1.5) +
       geom_point(aes(y = Total.Exp.per.ADM), color = "#0AB6FF", size = 3.5) +
       labs(x = "Year", y = "Spending per Student (in USD)") +
-      scale_x_continuous(breaks=c(2012,2014,2016,2018,2020)) +
+      scale_x_continuous(breaks=c(2011,2012,2013,2014,2015,2016,2017,2018,2019,2020)) +
       theme(
-        axis.title = element_text(face = "bold", margin = margin(t = 0, r = 100, b = 0, l = 0))
+        axis.title = element_text(face = "bold")
       )
   })
   
@@ -54,7 +55,7 @@ server <- function(input, output) {
       geom_line(aes(y = state_average_2011_2020$Total.Exp.per.ADM), size = 1.5) +
       geom_point(aes(y = state_average_2011_2020$Total.Exp.per.ADM), size = 3.5) +
       labs(x = "Year", y = "Spending per Student (in USD)") +
-      scale_x_continuous(breaks=c(2012,2014,2016,2018,2020)) +
+      scale_x_continuous(breaks=c(2011,2012,2013,2014,2015,2016,2017,2018,2019,2020)) +
       theme(
         axis.title = element_text(face = "bold")
       )
