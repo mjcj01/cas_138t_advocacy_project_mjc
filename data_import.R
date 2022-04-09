@@ -21,6 +21,8 @@ afr_adm_expenditures_2018_19 <- read.csv("C:\\Users\\micha\\Documents\\Spring 20
 afr_adm_expenditures_2019_20 <- read.csv("C:\\Users\\micha\\Documents\\Spring 2022\\CAS 138T\\Advocacy Project\\Advocacy Project Directory\\Data\\Finances AFR Expenditures 2019-2020.csv") %>%
   select(School.District,County,Total.Exp.per.ADM)
 
+state_average_2011_2020 <- read.csv("C:\\Users\\micha\\Documents\\Spring 2022\\CAS 138T\\Advocacy Project\\Advocacy Project Directory\\Data\\state_average_2011_20.csv")
+
 afr_adm_expenditures_2010_11$Year <- as.numeric("2011")
 afr_adm_expenditures_2011_12$Year <- as.numeric("2012")
 afr_adm_expenditures_2012_13$Year <- as.numeric("2013")
@@ -38,4 +40,17 @@ afr_expenditures_all <- rbind(afr_adm_expenditures_2010_11,afr_adm_expenditures_
                               afr_adm_expenditures_2013_14,afr_adm_expenditures_2014_15,afr_adm_expenditures_2015_16,
                               afr_adm_expenditures_2016_17,afr_adm_expenditures_2017_18,afr_adm_expenditures_2018_19,
                               afr_adm_expenditures_2019_20)
+
+### For whatever reason, there were differences in capitalization and spacing for school district names between years, which created problems
+### when generating graphs. These functions are intended to fix these errors.
+
+afr_expenditures_all$School.District <- gsub("  ", " ", afr_expenditures_all$School.District)
+afr_expenditures_all$School.District <- gsub("Dubois", "DuBois", afr_expenditures_all$School.District)
+
+### Cheltenham School District is referred to differently between 2011-2015 and 2016-2020, so I am going to use the most recent name as that is
+### consistent with their website
+
+afr_expenditures_all$School.District <- gsub("Cheltenham Township SD", "Cheltenham SD", afr_expenditures_all$School.District)
+
+afr_expenditures_all$School.District <- as.factor(afr_expenditures_all$School.District)
 
