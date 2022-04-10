@@ -4,8 +4,11 @@ library(plotly)
 library(rsconnect)
 
 ui <- fluidPage(
+  
   titlePanel("School District Expenditures per Student"),
+  
   sidebarLayout(
+    
     sidebarPanel(
       
       selectInput(inputId = "schooldistrict",
@@ -13,6 +16,11 @@ ui <- fluidPage(
                   choices = c(afr_expenditures_all$School.District),
                   selected = NULL),
       checkboxInput("state_avg", "Show State Average Line", FALSE),
+      HTML("<p>Data is sourced from the Pennsylvania Department of Education. Click 
+           <a href = https://www.education.pa.gov/Teachers%20-%20Administrators/School%20Finances/
+           Finances/AFR%20Data%20Summary/Pages/AFR-Data-Summary-Level.aspx>here</a> to access it!</p>"),
+      HTML("<p><img src = blue_line.png height = 12.5 width = 25> is the selected school district's decade expenditures per student.</p>"),
+      HTML("<p><img src = black_line.png height = 12.5 width = 25> is the average expenditures across the state.</p>")
     ),
     
     mainPanel(
@@ -25,6 +33,7 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
+  
   schooldistrictInput <- reactive({
     afr_expenditures_all %>% filter(School.District == input$schooldistrict)
   })
@@ -40,7 +49,8 @@ server <- function(input, output) {
       labs(x = "Year", y = "Spending per Student (in USD)") +
       scale_x_continuous(breaks=c(2011,2012,2013,2014,2015,2016,2017,2018,2019,2020)) +
       theme(
-        axis.title = element_text(face = "bold")
+        axis.title = element_text(face = "bold"),
+        legend.position = ("left")
       )
   })
   
