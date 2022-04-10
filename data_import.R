@@ -54,3 +54,7 @@ afr_expenditures_all$School.District <- gsub("Cheltenham Township SD", "Cheltenh
 
 afr_expenditures_all$School.District <- as.factor(afr_expenditures_all$School.District)
 
+colnames(afr_expenditures_all) <- c("School District", "County", "Expenditures per Student", "Year", "is.state")
+colnames(state_average_2011_2020) <- c("School District", "County", "Average Expenditures per Student Across PA", "Year", "is.state")
+
+`Average Expenditures per Student Across PA` <- state_average_2011_2020$`Average Expenditures per Student Across PA`
