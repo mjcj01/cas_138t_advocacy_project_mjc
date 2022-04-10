@@ -16,7 +16,7 @@ ui <- fluidPage(
       
       selectInput(inputId = "schooldistrict",
                   label = NULL,
-                  choices = c(afr_expenditures_all$School.District),
+                  choices = c(afr_expenditures_all$`School District`),
                   selected = NULL),
       checkboxInput("state_avg", "Show State Average Line", FALSE),
       HTML("<p>Data is sourced from the Pennsylvania Department of Education. Click 
@@ -38,7 +38,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   schooldistrictInput <- reactive({
-    afr_expenditures_all %>% filter(School.District == input$schooldistrict)
+    afr_expenditures_all %>% filter(`School District` == input$schooldistrict)
   })
   
   output$districtspending_nostate <- renderPlotly({
@@ -47,8 +47,8 @@ server <- function(input, output) {
     )
     
     ggplot(data = schooldistrictInput(), aes(x = Year)) +
-      geom_line(aes(y = Total.Exp.per.ADM), color = "#0AB6FF", size = 1.5) +
-      geom_point(aes(y = Total.Exp.per.ADM), color = "#0AB6FF", size = 3.5) +
+      geom_line(aes(y = `Expenditures per Student`), color = "#0AB6FF", size = 1.5) +
+      geom_point(aes(y = `Expenditures per Student`), color = "#0AB6FF", size = 3.5) +
       labs(x = "Year", y = "Spending per Student (in USD)") +
       scale_x_continuous(breaks=c(2011,2012,2013,2014,2015,2016,2017,2018,2019,2020)) +
       theme(
@@ -63,10 +63,10 @@ server <- function(input, output) {
     )
     
     ggplot(data = schooldistrictInput(), aes(x = Year)) +
-      geom_line(aes(y = Total.Exp.per.ADM), color = "#0AB6FF", size = 1.5) +
-      geom_point(aes(y = Total.Exp.per.ADM), color = "#0AB6FF", size = 3.5) +
-      geom_line(aes(y = state_average_2011_2020$Total.Exp.per.ADM), size = 1.5) +
-      geom_point(aes(y = state_average_2011_2020$Total.Exp.per.ADM), size = 3.5) +
+      geom_line(aes(y = `Expenditures per Student`), color = "#0AB6FF", size = 1.5) +
+      geom_point(aes(y = `Expenditures per Student`), color = "#0AB6FF", size = 3.5) +
+      geom_line(aes(y = `Average Expenditures per Student Across PA`), size = 1.5) +
+      geom_point(aes(y = `Average Expenditures per Student Across PA`), size = 3.5) +
       labs(x = "Year", y = "Spending per Student (in USD)") +
       scale_x_continuous(breaks=c(2011,2012,2013,2014,2015,2016,2017,2018,2019,2020)) +
       theme(
